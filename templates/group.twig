@@ -1,0 +1,10 @@
+<div class="w-full md:w-1/3 xl:w-1/4 m-3 bg-boxbackgroundcolor flex-grow flex flex-wrap flex-col border border-boxbordercolor rounded shadow">
+	<div class="border-b border-boxbordercolor p-3">
+		<h5 class="font-bold uppercase text-boxheading">{{ name }}</h5>
+	</div>
+	<div class="p-5 flex-grow">
+        {% for item in items %}
+            {% include "group-item.twig" with item %}
+        {% endfor %}
+	</div>
+</div>

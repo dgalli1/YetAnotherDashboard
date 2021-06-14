@@ -1,0 +1,15 @@
+{
+    "name": "dgalli1/just-another-dashboard",
+    "type": "project",
+    "require-dev": {
+        "symfony/debug": "^4.4",
+        "symfony/var-dumper": "^5.3"
+    },
+    "require": {
+        "twig/twig": "^3.3",
+        "symfony/yaml": "^5.3"
+    },
+    "autoload": {
+        "psr-4": { "App\\": "src/" }
+    }
+}

@@ -1,0 +1,118 @@
+favicon:
+secretkey: "r2*%DN2X!BZcQqMf^Z3eV&"
+header:
+ search-enable: false
+ display-user: false
+ title: "Dashboard"
+ logo-enabled: true
+ navlinks:
+  - url: 'https://mail.galli.li'
+    text: 'Mail'
+    groups:
+      - mail
+  - url: 'https://account.galli.li/change_password/'
+    text: 'Change Password'
+  - url: 'https://auth.galli.li/logout/'
+    text: 'Logout'
+groups:
+  - name: Media
+    groups:
+      - media
+    items:
+      - url: 'https://jelllyfin.galli.li'
+        text: 'Jellyfin'
+        logo_file: jellyfin.svg
+        groups: 
+         - media
+      - url: 'https://sonarr.galli.li/'
+        text: 'Sonarr'
+        logo_file: sonarr.svg
+        groups:
+          - admins
+      - url: 'https://radarr.galli.li/'
+        text: 'Radarr'
+        logo_file: radarr.svg
+        groups:
+          - admins
+      - url: 'https://bazarr.galli.li/'
+        text: 'Bazarr'
+        logo_file: bazarr.png
+        groups:
+          - admins
+      - url: 'https://sonarr.galli.li/jackett/UI/'
+        text: 'Jackett'
+        logo_file: jackett.png
+        groups:
+          - admins
+  - name: Misc
+    items:
+      - url: 'https://bitwarden.galli.li'
+        text: 'Vaultwarden'
+        logo_file: bitwarden-icon.svg
+      - url: 'https://nextcloud.galli.li'
+        text: 'Nextcloud'
+        groups:
+          - 'cloud'
+        logo_file: nextcloud.png
+  - name: Downloaders
+    groups:
+      - admins
+    items:
+      - url: 'https://transmission.galli.li'
+        text: 'Transmission'
+        logo_file: transmission.svg
+      - url: 'https://nzb.galli.li/'
+        text: 'Sabnzbd'
+        logo_file: sabnzbd.webp
+      - url: 'https://jdownloader.galli.li/'
+        text: 'JDownloader'
+        logo_file: jdownloader.png
+  - name: Development
+    groups:
+      - developer
+    items:
+      - url: 'https://ide.galli.li/'
+        text: 'Theia'
+        logo_file: theia.svg
+        groups:
+          - admins
+      - url: 'https://nzb.galli.li/'
+        text: 'Huginn'
+        logo_file: huginn.png
+  - name: Communication
+    items:
+      - url: 'https://mail.galli.li/'
+        text: 'Webmail'
+        groups:
+          - mail
+      - url: 'https://mail.galli.li/admin'
+        text: 'Mail Administration'
+        groups:
+          - mail
+      - url: 'https://element.galli.li/'
+        text: 'Matrix Element'
+        groups:
+          - chat
+      - url: 'https://dimension.galli.li/'
+        text: 'Matrix Dimension'
+        groups:
+          - chat
+  - name: Managment
+    groups:
+      - admins
+    items:
+      - url: 'http://galli.li:81'
+        text: 'Nginx Proxy Manager'
+        logo_file: nginxproxymanager.png
+      - url: 'https://portainer.galli.li/'
+        text: 'Portainer'
+        logo_file: portainer.png
+      - url: 'https://mail.galli.li/admin'
+        text: 'Mail Administration'
+      - url: 'https://matrix.galli.li/synapse-admin/#/login'
+        text: 'Synapse Admin'
+      - url: 'https://cockpit.galli.li'
+        text: 'Cockpit'
+        logo_file: cockpit.png
+
+    

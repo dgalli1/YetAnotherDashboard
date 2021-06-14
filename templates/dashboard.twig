@@ -1,0 +1,31 @@
+{% include "head.twig" %}
+<body class="bg-background font-sans leading-normal tracking-normal">
+    {% include "header.twig" with header %}
+	<!--Container-->
+	<div class="container w-full mx-auto pt-20">
+		
+		<div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+			
+			<!--Console Content-->
+			
+			<div class="flex flex-wrap my-auto">
+                
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+                {% for group in groups %}
+                        {% include "group.twig" with group %}
+                {% endfor %}
+
+            </div>
+
+
+            </div>
+								
+			<!--/ Console Content-->
+					
+		</div>
+		
+
+	</div> 
+	<!--/container-->
+</body>
+</html>
