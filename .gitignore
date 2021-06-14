@@ -1,2 +1,7 @@
 /vendor/
 /resources/node_modules
+webroot/res/
+
+icons/
+
+cache/
