@@ -1,0 +1,11 @@
+<nav id="header" class="bg-backgroundmenu fixed w-full z-10 top-0 shadow">
+	<div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
+		{% set array = [] %}
+		{% set headerlogo = header.logo|preprocess("header/logo.twig") %}
+		{% include headerlogo.template with headerlogo %}
+		{% set headermobilemenu = header.mobilemenu|preprocess("header/mobile-menu.twig") %}
+		{% include headermobilemenu.template with headermobilemenu %}
+		{% set navigation = header.navigation|preprocess("navigation/nav-container.twig") %}
+		{% include navigation.template with navigation %}
+	</div>
+</nav>

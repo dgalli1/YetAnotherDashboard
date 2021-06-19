@@ -1,0 +1,9 @@
+{% set head = head|preprocess("head.twig") %}
+{% include head.template with head %}
+<body class="bg-background font-sans leading-normal tracking-normal">
+	{% set header = header|preprocess("header/header.twig") %}
+	{% include header.template with header %}
+	{% set container = container|preprocess("container.twig") %}
+	{% include container.template with container %}
+</body>
+</html>

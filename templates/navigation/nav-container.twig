@@ -1,0 +1,11 @@
+<div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 md:pb-1 lg:mt-0 z-20" id="nav-content">
+	<ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
+
+        {% for navlink in items %}
+        	{% set navlink = navlink|preprocess("navigation/nav-item.twig") %}
+		    {% include navlink.template with navlink %}
+        {% endfor %}
+	</ul>
+    {% set search = search|preprocess("header/search.twig") %}
+	{% include search.template with search %}	
+</div>
