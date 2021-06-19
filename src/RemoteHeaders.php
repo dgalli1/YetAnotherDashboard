@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use Psr\Log\Test\DummyTest;
+use Exception;
 
 class RemoteHeaders {
 
@@ -48,11 +48,17 @@ class RemoteHeaders {
         foreach ($config as $key => $value) {
             $groups = array_key_exists('groups',$value) ? $value['groups'] : [];
             $unsetCount = 0;
+            if(!is_array($groups)) {
+                throw new Exception("Check your config, Groups have to be an array in group ".$value['name']);
+            }
             if($this->inGroup($groups)) {
                 //check for secondary level
                 if(array_key_exists('items',$value)) {
                     foreach ($value['items'] as $keyInner => $innerItems) {
                         $groups = array_key_exists('groups',$innerItems) ? $innerItems['groups'] : [];
+                        if(!is_array($groups)) {
+                            throw new Exception("Check your config, Groups have to be an array at item ".$innerItems['text']);
+                        }
                         if(!$this->inGroup($groups)) {
                             $unsetCount++;
                             unset($config[$key]['items'][$keyInner]);
@@ -73,7 +79,7 @@ class RemoteHeaders {
     }
     public function filter(ConfigManager $configManager) {
         $config = $configManager->getConfig();
-        $this->filterByGroup($config['header']['navlinks']);
+        $this->filterByGroup($config['header']['navigation']);
         $this->filterByGroup($config['groups']);
         return $config;
     }
