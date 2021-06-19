@@ -5,6 +5,8 @@ const path = require("path");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { extendDefaultPlugins } = require("svgo");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const fs = require('fs');
+
 module.exports = (env, options) => ({
   
   entry: {
@@ -150,6 +152,18 @@ module.exports = (env, options) => ({
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
     }),
+    {
+      apply: (compiler) => {
+        compiler.hooks.afterEmit.tapAsync(
+          'BuildTimestampPlugin',
+          (compilation, callback) => {
+            const time = new Date();
+            fs.writeFileSync(path.join(__dirname,'../cache/build-timestamp.txt'),time.getTime().toString())
+            console.log('Created Build Timestamp File');
+            callback();
+          });
+      }
+    },
     new ImageMinimizerPlugin({
       minimizerOptions: {
         // Lossless optimization with custom option

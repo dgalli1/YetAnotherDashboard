@@ -1,22 +1,21 @@
+const yaml = require('yaml')
+const fs = require('fs');
+const path = require('path');
+const configFilePath = path.join(__dirname, '../config/config.yml')
+const configParsed = yaml.parse(fs.readFileSync(configFilePath).toString());
+const safeListParsed = yaml.parse(fs.readFileSync(path.join(__dirname,'../cache/whitelist.yml')).toString());
 module.exports = {
-  purge: [
-        '../templates/*.twig',
-  ],
+  mode: 'jit',
+  purge: {
+        content: [
+          '../templates/**/*.twig',
+          '../config/config.yml',
+          '../config/overwrittes/*.twig'
+        ],
+        safelist: safeListParsed
+  },
   theme: {
-    colors: {
-      background: '#191919',
-      container: '#191919',
-      font: '#111827',
-      link: '#111827',
-      backgroundmenu: '#111827',
-      textcolormenu: '#79889c',
-      titlecolor: '#d7dadc',
-      boxbackgroundcolor: '#111827',
-      boxbordercolor: '#4b5563',
-      boxheading: '#d7dadc',
-      boxcontent: '#d7dadc',
-      groupelement: '#1a253c'
-    },
+    colors: configParsed.theme.colors,
     fontFamily: {
       sans: ['Verdana', 'sans-serif'],
       serif: ['Georgia', 'serif'],
@@ -44,11 +43,5 @@ module.exports = {
         extrabold: '800',
         black: '900',
     },
-  },
-  variants: {
-    extend:  {
-      scale: ['focus-within']
-    }
-  },
-  plugins: []
+  }
 }

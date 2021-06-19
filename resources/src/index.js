@@ -6,5 +6,3 @@ function importAll(r) {
     return r.keys().map(r);
   }
 const images = importAll(require.context('../../icons/', false, /\.(png|jpe?g|svg|gif|ico|webp|avif)$/));
-
-//import '../../config.yml'
