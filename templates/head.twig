@@ -7,6 +7,9 @@
     <title>Dashboard</title>	
     <link rel="stylesheet" href="/res/css/main.css?cache={{ cache }}">
     <script defer src="/res/js/browser.js?cache={{ cache }}"></script>
+    {% for item in includes %}
+        {{ item|raw }}        
+    {% endfor %}
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?cache={{ cache }}">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?cache={{ cache }}">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?cache={{ cache }}">

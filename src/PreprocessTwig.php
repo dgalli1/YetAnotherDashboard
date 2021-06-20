@@ -11,7 +11,10 @@ class PreprocessTwig {
         if(!array_key_exists('template',$variables)) {
             $variables['template'] = ConfigManager::getInstance()->getOverwrittenGlobalTemplates($template,$variables);
         }
-        $variables = HookManager::trigger("alter_template_data".str_replace(['/','.twig'],['_',''],$variables['template']),[
+        $variables = HookManager::trigger("alter_template_data_".str_replace(['/','.twig'],['_',''],$variables['template']),[
+            'variables' => $variables
+        ],'variables');
+        $variables = HookManager::trigger("alter_template_data_all",[
             'variables' => $variables
         ],'variables');
         return $variables;

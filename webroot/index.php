@@ -1,32 +1,33 @@
 <?php
 
-use App\alterIncludeTokenParser;
+use App\AssetManager;
 use App\CacheManager;
 use App\ConfigManager;
 use App\HookManager;
 use App\Plugin\PluginManager;
 use App\PreprocessTwig;
 use App\RemoteHeaders;
+use App\RoutingManager;
 use App\WhitelistManager;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
-function bratwurst() {
 
-}
 require '../vendor/autoload.php';
-
 $configManger = new ConfigManager();
-new WhitelistManager(true);
+new WhitelistManager($configManger->getIsDebug());
 $hookManager = new HookManager();
+new AssetManager($configManger->getIsDebug());
+$cache = new CacheManager();
 $plugin = new PluginManager();
 $loader = new \Twig\Loader\FilesystemLoader([
     __DIR__."/../templates",
-    __DIR__."/../config/overwrites"
+    __DIR__."/../config/overwrites",
+    ...$plugin->getTemplateFolders()
     ]
 );
+
 $twig = new \Twig\Environment($loader, [
-    'cache' => false,
-    'debug' => true
+    'cache' => $configManger->getIsDebug() ? false : __DIR__."/../cache",
+    'debug' => $configManger->getIsDebug()
 ]);
 $twig->addFilter(new TwigFilter('preprocess', function ($array, String $template = "") {
     return PreprocessTwig::preprocessTemplateVariables($array,$template);
@@ -35,22 +36,22 @@ $filter = new \Twig\TwigFilter('preprocess_classes', function ($classes,$templat
     return PreprocessTwig::preprocessCssClasses($classes, $template,$overwritten);
 });
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-new CacheManager();
 $twig->addFilter($filter);
 $remote = new RemoteHeaders();
 $config = $remote->filter($configManger);
 $template = $twig->load('page.twig');
-if(array_key_exists('generate_missing_keys',$_GET)) {
-    $configManger->generateMissingConfigKeys(true);
-}
+
 $config = HookManager::trigger('preprocess_config',[
     'template' => $template,
     'config' => $config
 ],'config');
+if(count($_GET) > 0) {
+    RoutingManager::handleRoute();
+}
+
 $rendered = $template->render(
     $config
 );
-
 HookManager::trigger('postprocess_html',[
     'template' => $template,
     'rendered_html' => $rendered

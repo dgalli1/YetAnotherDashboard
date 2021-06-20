@@ -1,6 +1,6 @@
 <div class="w-3/4 pl-2 md:pl-0">
 	<a class="text-gray-100 text-base text-titlecolor h-11 xl:text-xl no-underline hover:no-underline font-bold"  href="#"> 
-		<img src="/justanotherdashboard.svg" class="w-12 h-11 inline-block ml-1 pr-2">
-		<span class="inline-block -mb-5">{{ header.title }}</span>
+		<img src="{% if logo_override %}{{ logo_override }}{% else %}{{"/justanotherdashboard.svg"}}{% endif %}" class="w-12 h-11 inline-block ml-1 pr-2">
+		<span class="inline-block -mb-5">{{ title }}</span>
 	</a>
 </div>

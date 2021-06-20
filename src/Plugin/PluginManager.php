@@ -2,6 +2,7 @@
 namespace App\Plugin;
 use App\ConfigManager;
 use App\HookManager;
+use App\RoutingManager;
 
 class PluginManager {
 
@@ -59,5 +60,21 @@ class PluginManager {
         foreach ($hooks as $key => $hook) {
             HookManager::registerHook($key,$hook,$pluginInstance);
         }
+        if($pluginInstance instanceof PluginRouteInterface) {
+            $routes = $pluginInstance->registerRoute();
+            foreach ($routes as $key => $route) {
+                RoutingManager::registerRoute($route,$pluginInstance);
+            }
+        }
+    }
+
+    public function getTemplateFolders() {
+        $folders = [];
+        foreach ($this->plugins as $key => $value) {
+            if(is_dir($value['folder']."/templates")) {
+                $folders[] = $value['folder']."/templates";
+            }
+        }
+        return $folders;
     }
 }

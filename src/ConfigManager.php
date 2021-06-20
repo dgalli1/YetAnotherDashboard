@@ -9,7 +9,6 @@ class ConfigManager {
     private $hasOverwrittenClasses = false;
     private $hasAdditionalClasses = false;
     private $hasCustomTemplates = false;
-    private $generateMissingConfigKeys = false;
 
     const classesOverride = 'classes-override';
     const classesAdditonal = 'classes-additional';
@@ -34,9 +33,6 @@ class ConfigManager {
         }
         self::$instance = $this;
     }
-    public function generateMissingConfigKeys() {
-        $this->generateMissingConfigKeys = true;
-    }
 
     public static function getInstance() {
         return self::$instance;
@@ -44,7 +40,9 @@ class ConfigManager {
     private function getTemplateMapping($templateName) {
         return str_replace('/','_',explode('.',$templateName)[0]);
     }
-
+    public function getIsDebug() {
+        return $this->config['debug'];
+    }
     public function getOverwrittenGlobalTemplates($templateName) {
         if(!$this->hasCustomTemplates ) {
             return $templateName;
