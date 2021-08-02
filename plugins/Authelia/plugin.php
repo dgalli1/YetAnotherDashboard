@@ -1,37 +1,25 @@
 <?php
-namespace App;
 
-use Exception;
+use App\ConfigManager;
+use App\Plugin\PluginInterface;
 
-class RemoteHeaders {
-
-    private $user;
+class Authelia implements PluginInterface
+{
     private $groups;
-    private $email;
-    private static $instance;
-
-    public function __construct()
+    
+    public function init(array $config)
     {
-        $this->user = array_key_exists('HTTP_REMOTE_USER',$_SERVER) ? $_SERVER['HTTP_REMOTE_USER'] : '' ;
-        $this->groups = array_key_exists('HTTP_REMOTE_GROUPS',$_SERVER) ? explode(',',$_SERVER['HTTP_REMOTE_GROUPS']) : ['cloud','chat','media','admins','developer'] ;
-        $this->email = array_key_exists('HTTP_REMOTE_EMAIL',$_SERVER) ? $_SERVER['HTTP_REMOTE_EMAIL'] : '' ;
-        self::$instance = $this;
-    }
-    public static function getInstance() {
-        return self::$instance;
+        $this->groups = array_key_exists('HTTP_REMOTE_GROUPS',$_SERVER) ? explode(',',$_SERVER['HTTP_REMOTE_GROUPS']) : [];
+        if(ConfigManager::getInstance()->getIsDebug()) {
+            $this->groups =  ['cloud','chat','media','admins','developer'];
+        }
+
     }
 
-    public function getUser() {
-        return $this->user;
-    }
-
-    public function getGroups() {
+    private function getGroups() {
         return $this->groups;
     }
 
-    public function getEmail() {
-        return $this->email;
-    }
     private function inGroup($groups) {
         if(count($groups) === 0) {
             return  true;
@@ -43,6 +31,7 @@ class RemoteHeaders {
         }
         return false;
     }
+
     private function filterByGroup(Array &$config) {
         //whole function should be recursive
         foreach ($config as $key => $value) {
@@ -75,12 +64,16 @@ class RemoteHeaders {
                 }
             }
         }
-
     }
-    public function filter(ConfigManager $configManager) {
-        $config = $configManager->getConfig();
-        $this->filterByGroup($config['header']['navigation']);
-        $this->filterByGroup($config['groups']);
-        return $config;
+
+    public function registerHooks(): array
+    {
+        return [
+            'preprocess_config' => function ($template, $config) {
+                $this->filterByGroup($config['header']['navigation']);
+                $this->filterByGroup($config['groups']);
+                return $config;
+            }
+        ];
     }
 }

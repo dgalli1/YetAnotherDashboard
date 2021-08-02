@@ -2,6 +2,8 @@ favicon:
 enable_auth_headers: true
 debug: true
 plugins: 
+  - name: Authelia
+    enabled: true
   - name: ChartJS
     enabled: true
   - name: SabnzbdTraffic

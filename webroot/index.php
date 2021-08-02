@@ -35,10 +35,12 @@ $twig->addFilter(new TwigFilter('preprocess', function ($array, String $template
 $filter = new \Twig\TwigFilter('preprocess_classes', function ($classes,$template,$overwritten) {
     return PreprocessTwig::preprocessCssClasses($classes, $template,$overwritten);
 });
-$twig->addExtension(new \Twig\Extension\DebugExtension());
+if($configManger->getIsDebug()) {
+    $twig->addExtension(new \Twig\Extension\DebugExtension());
+}
 $twig->addFilter($filter);
-$remote = new RemoteHeaders();
-$config = $remote->filter($configManger);
+// $remote = new RemoteHeaders();
+$config = $configManger->getConfig();
 $template = $twig->load('page.twig');
 
 $config = HookManager::trigger('preprocess_config',[
