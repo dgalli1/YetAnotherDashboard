@@ -1,0 +1,152 @@
+
+
+<html style="background-color: black;">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus/lib/index.full.js"></script>
+    <title>YetAnotherDashboard Theme Builder</title>
+    <style>
+      * { font-family: Verdana, sans-serif;}
+      .picker-label {
+        margin-top: 0px;
+        margin-bottom: 0.5rem
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="display: flex">
+      <iframe id="iframe" style="flex-grow: 1; height: calc( 100vh - 2rem); border-style: none" src="website/local.dashboard.ch/index.html"></iframe>
+      <div style="flex-shrink: 1; display: flex; flex-wrap: wrap; background: #d3dce6; border-radius: 4px; padding-left: 1rem; padding-right: 1rem; flex-flow: column; max-height: calc(100vh - 2rem)">
+        <p><b>Preset</b></p>
+        <el-select v-model="activeTheme" placeholder="Select">
+          <el-option
+            v-for="item in themes"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <p><b>Colors</b></p>
+        <div style="" v-for="color in colors" :key="color.key">
+            <p class="picker-label">{{ color.name }}</p>
+            <el-color-picker v-model="color.value"></el-color-picker>
+        </div>
+        <p><b>Output</b></p>
+        <p>Copypaste this into your config.yml</p>
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 10}"
+          placeholder="Change some Settings.."
+          read-only=true
+          v-model="outputText">
+        </el-input>
+      </div>
+    </div>
+    <script>
+      const App = {
+        watch: {
+            colors: {
+                deep: true,
+                handler(val) {
+                    let css = "";
+                    let output = "theme:\n  colors:\n";
+                    val.forEach(color => {
+                        css = css + color.css.replace('{color}', color.value) + "\n";
+                        output = output + "    " + color.key + ': "'+color.value +"\"\n";
+                    });
+                    let myiFrame = document.getElementById("iframe");
+                    let innerDoc = myiFrame.contentDocument;
+                    innerDoc.getElementById('overwritteStyles').innerHTML = css;
+                    this.outputText = output; 
+                }
+            },
+            async activeTheme(val) {
+              const response = await fetch('presets/'+val+".json")
+              const theme = await response.json()
+              this.colors.forEach(colorSetting => {
+                colorSetting.value = theme[colorSetting.key]
+              });
+            }
+        },
+        async mounted() {
+          const response = await fetch('themes.json');
+          this.themes = await response.json();
+          console.log(this.themes)
+
+        },
+        data() {
+          return {
+            themes: [],
+            output: '',
+            activeTheme: 'default',
+            colors: [
+                {
+                    'name': 'Background',
+                    'key': 'background',
+                    'css': '.bg-background { background-color: {color} }',
+                    'value': '#191919'
+                },
+                {
+                    'name': 'Background Menu',
+                    'key': 'backgroundmenu',
+                    'css': '.bg-backgroundmenu { background-color: {color} }',
+                    'value': '#111827'
+                },
+                {
+                    'name': 'Color Menu Text',
+                    'key': 'textcolormenu',
+                    'css': '.text-textcolormenu { color: {color} }',
+                    'value': '#83848f'
+                },
+                {
+                    'name': 'Color Title Text',
+                    'key': 'titlecolor',
+                    'css': '.text-titlecolor { color: {color} }',
+                    'value': '#d7dadc'
+                },
+                {
+                    'name': 'Background Box',
+                    'key': 'boxbackgroundcolor',
+                    'css': '.bg-boxbackgroundcolor { background-color: {color} }',
+                    'value': '#111827'
+                },
+                {
+                    'name': 'Box Border Color',
+                    'key': 'boxbordercolor',
+                    'css': '.border-boxbordercolor { border-color: {color} }',
+                    'value': '#4b5563'
+                },
+                {
+                    'name': 'Box Header Text Color',
+                    'key': 'boxheading',
+                    'css': '.text-boxheading { color: {color} }',
+                    'value': '#d7dadc'
+                },
+                {
+                    'name': 'Box Content Text Color',
+                    'key': 'boxcontent',
+                    'css': '.text-boxcontent { color: {color} }',
+                    'value': '#d7dadc'
+                },
+                {
+                    'name': 'Box Content Text Color',
+                    'key': 'groupelement',
+                    'css': '.bg-groupelement { background-color: {color} }',
+                    'value': '#1a253c'
+                },
+
+            ]
+          };
+        },
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount("#app");
+    </script>
+  </body>
+</html>

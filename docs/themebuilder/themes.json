@@ -1,0 +1,14 @@
+[
+    {
+        "label": "Deep Blue",
+        "value": "default"
+    },
+    {
+        "label": "Fresh Green",
+        "value": "green"
+    },
+    {
+        "label": "Shitty Brown",
+        "value": "brown"
+    }
+]
