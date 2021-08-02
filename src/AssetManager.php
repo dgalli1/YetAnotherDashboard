@@ -61,4 +61,9 @@ class AssetManager {
         self::$heads[] = '<script src="'.$url.'?cache='.CacheManager::getTimestamp().'"'.$stringAttributes."></script>";
     }
 
+    public static function addImage($filepath, $filename) {
+        $filepath = self::copyAsset($filepath,$filename);
+        return $filepath.'?cache='.CacheManager::getTimestamp();
+    }
+
 }
