@@ -63,7 +63,7 @@ class PluginManager {
         if($pluginInstance instanceof PluginRouteInterface) {
             $routes = $pluginInstance->registerRoute();
             foreach ($routes as $key => $route) {
-                RoutingManager::registerRoute($route,$pluginInstance);
+                RoutingManager::registerRoute($plugin,$key,$route,$pluginInstance);
             }
         }
     }

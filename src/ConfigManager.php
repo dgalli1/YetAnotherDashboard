@@ -10,6 +10,8 @@ class ConfigManager {
     private $hasAdditionalClasses = false;
     private $hasCustomTemplates = false;
 
+    public $mappedClasses = [];
+
     const classesOverride = 'classes-override';
     const classesAdditonal = 'classes-additional';
     const templatesOverride = 'templates';
@@ -63,11 +65,14 @@ class ConfigManager {
             'template' => $templateName,
             'templateConfigName' => $templateNameMapped
         ],'template');
+        if(!in_array($templateNameMapped,$this->mappedClasses))
+        $this->mappedClasses[] = $templateNameMapped;
+
         return $templateName;
     }
 
     public function getOverwrittenGlobalClasses($templateName,$classes) {
-
+        
         $templateNameMapped = $this->getTemplateMapping($templateName);
         HookManager::trigger("alter_class_config_key",[
             'template' => $templateName,

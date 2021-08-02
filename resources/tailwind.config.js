@@ -9,6 +9,8 @@ module.exports = {
   purge: {
         content: [
           '../templates/**/*.twig',
+          '../config/plugins/*/templates/*.twig',
+          '../plugins/*/templates/*.twig',
           '../config/config.yml',
           '../config/overwrittes/*.twig'
         ],
@@ -43,5 +45,5 @@ module.exports = {
         extrabold: '800',
         black: '900',
     },
-  }
+  },
 }

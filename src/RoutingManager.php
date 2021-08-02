@@ -10,6 +10,7 @@ class RoutingManager {
 
     public static function handleRoute() {
         foreach (self::$routes as $key => $route) {
+            if($route['url'] !== $_GET['path'])
             /** @var \Closure  */
             $closure = $route['closure'];
             /** @var Response */
@@ -19,8 +20,13 @@ class RoutingManager {
         }
     }
 
-    public static function registerRoute($function,$instance) {
+    private static function getUrl($plugin,$name) {
+        return "/plugin/".strtolower($plugin['name'])."/".$name;
+    }
+
+    public static function registerRoute($plugin,$name, $function,$instance) {
         self::$routes[] = [
+            'url' => self::getUrl($plugin,$name),
             'closure' => $function,
             'class' => $instance
         ];

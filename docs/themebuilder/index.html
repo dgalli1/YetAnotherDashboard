@@ -13,15 +13,42 @@
     <style>
       * { font-family: Verdana, sans-serif;}
       .picker-label {
-        margin-top: 0px;
-        margin-bottom: 0.5rem
+        margin: 0px;
+        align-items: center;
+        flex-grow: 1;
+        display: grid;
+      }
+      .el-textarea textarea {
+        min-height: 300px !important;
+        min-width: 285px !important;
+      }
+      #settings-container {
+        flex-shrink: 1;
+        display: flex;
+        flex-wrap: wrap;
+        background: #d3dce6;
+        border-radius: 4px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 2rem;
+        flex-flow: column;
+        max-height: calc(100vh - 3rem);
+        overflow: scroll; 
+      }
+      .flex {
+        display: flex;
+      }
+      #iframe {
+        flex-grow: 1;
+        height: calc( 100vh - 2rem);
+        border-style: none
       }
     </style>
   </head>
   <body>
-    <div id="app" style="display: flex">
-      <iframe id="iframe" style="flex-grow: 1; height: calc( 100vh - 2rem); border-style: none" src="website/local.dashboard.ch/index.html"></iframe>
-      <div style="flex-shrink: 1; display: flex; flex-wrap: wrap; background: #d3dce6; border-radius: 4px; padding-left: 1rem; padding-right: 1rem; flex-flow: column; max-height: calc(100vh - 2rem)">
+    <div id="app" class="flex">
+      <iframe id="iframe" src="website/local.dashboard.ch/index.html"></iframe>
+      <div id="settings-container">
         <p><b>Preset</b></p>
         <el-select v-model="activeTheme" placeholder="Select">
           <el-option
@@ -32,7 +59,7 @@
           </el-option>
         </el-select>
         <p><b>Colors</b></p>
-        <div style="" v-for="color in colors" :key="color.key">
+        <div class="flex" v-for="color in colors" :key="color.key">
             <p class="picker-label">{{ color.name }}</p>
             <el-color-picker v-model="color.value"></el-color-picker>
         </div>
@@ -40,7 +67,6 @@
         <p>Copypaste this into your config.yml</p>
         <el-input
           type="textarea"
-          :autosize="{ minRows: 2, maxRows: 10}"
           placeholder="Change some Settings.."
           read-only=true
           v-model="outputText">
@@ -92,22 +118,22 @@
                     'value': '#191919'
                 },
                 {
-                    'name': 'Background Menu',
+                    'name': 'Header Heading Text',
+                    'key': 'titlecolor',
+                    'css': '.text-titlecolor { color: {color} }',
+                    'value': '#d7dadc'
+                },
+                {
+                    'name': 'Header Background',
                     'key': 'backgroundmenu',
                     'css': '.bg-backgroundmenu { background-color: {color} }',
                     'value': '#111827'
                 },
                 {
-                    'name': 'Color Menu Text',
+                    'name': 'Header Menu Text',
                     'key': 'textcolormenu',
                     'css': '.text-textcolormenu { color: {color} }',
                     'value': '#83848f'
-                },
-                {
-                    'name': 'Color Title Text',
-                    'key': 'titlecolor',
-                    'css': '.text-titlecolor { color: {color} }',
-                    'value': '#d7dadc'
                 },
                 {
                     'name': 'Background Box',
@@ -116,25 +142,25 @@
                     'value': '#111827'
                 },
                 {
-                    'name': 'Box Border Color',
+                    'name': 'Box Border',
                     'key': 'boxbordercolor',
                     'css': '.border-boxbordercolor { border-color: {color} }',
                     'value': '#4b5563'
                 },
                 {
-                    'name': 'Box Header Text Color',
+                    'name': 'Box Header Text',
                     'key': 'boxheading',
                     'css': '.text-boxheading { color: {color} }',
                     'value': '#d7dadc'
                 },
                 {
-                    'name': 'Box Content Text Color',
+                    'name': 'Box Content Text',
                     'key': 'boxcontent',
                     'css': '.text-boxcontent { color: {color} }',
                     'value': '#d7dadc'
                 },
                 {
-                    'name': 'Box Content Text Color',
+                    'name': 'Box Content Background',
                     'key': 'groupelement',
                     'css': '.bg-groupelement { background-color: {color} }',
                     'value': '#1a253c'

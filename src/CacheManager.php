@@ -3,6 +3,7 @@ namespace App;
 use App\HookManager;
 
 class CacheManager {
+    const cachePath = __DIR__."/../cache";
     const filepath = __DIR__."/../cache/build-timestamp.txt";
     private static $timestamp;
     public function __construct()

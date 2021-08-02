@@ -1,0 +1,8 @@
+<div class="w-100" style="height: {{ height }}" id="{{ container_id }}"></div>
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => new window.TradingView.widget(
+{{ tradingview_settings|raw }}
+));
+</script>

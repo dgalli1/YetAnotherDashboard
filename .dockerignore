@@ -1,0 +1,8 @@
+/vendor/
+/resources/node_modules
+webroot/res/
+webroot/assets/
+Dockerfile
+LICENSE
+README.md
+cache/

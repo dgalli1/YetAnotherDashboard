@@ -8,14 +8,9 @@ class ChartJS implements PluginInterface
 {
     public function init(array $config)
     {
-        if(array_key_exists('cdn',$config)) {
-            AssetManager::addRemoteScript('https://cdn.jsdelivr.net/npm/chart.js');
-            AssetManager::addRemoteScript('https://cdn.jsdelivr.net/npm/moment');
-            AssetManager::addRemoteScript('https://cdn.jsdelivr.net/npm/chartjs-adapter-moment');
-
-        } else {
-            AssetManager::addLocalScript(__DIR__."/assets/chart.js",'chart.js');
-        }
+        AssetManager::addRemoteScript('https://cdn.jsdelivr.net/npm/chart.js',['defer']);
+        AssetManager::addRemoteScript('https://cdn.jsdelivr.net/npm/moment',['defer']);
+        AssetManager::addRemoteScript('https://cdn.jsdelivr.net/npm/chartjs-adapter-moment',['defer']);
     }
 
     public function registerHooks(): array

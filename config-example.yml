@@ -1,29 +1,78 @@
 favicon:
-secretkey: "r2*%DN2X!BZcQqMf^Z3eV&"
+enable_auth_headers: true
+debug: true
+plugins: 
+  - name: ChartJS
+    enabled: true
+  - name: SabnzbdTraffic
+    enabled: true
+    baseurl: "http://192.168.178.81:8081"
+    apikey: '8a0f8b8ae12b6d8eea08e43b4215550f'
+theme:
+  colors:
+    background: '#191919'
+    backgroundmenu: '#111827'
+    textcolormenu: '#83848f'
+    titlecolor: '#d7dadc'
+    boxbackgroundcolor: '#111827'
+    boxbordercolor: '#4b5563'
+    boxheading: '#d7dadc'
+    boxcontent: '#d7dadc'
+    groupelement: '#1a253c'
+  templates:
+    head:
+    header_header:
+    header_logo:
+    header_mobile-menu:
+    navigation_nav-container:
+    navigation_nav-item:
+    container:
+    groups_group:
+    groups_group-item:
+  classes-override:
+    header_header:
+    header_logo:
+    header_mobile-menu:
+    navigation_nav-container:
+    navigation_nav-item:
+    container:
+    groups_group:
+    groups_group-item:
+  classes-additional:
+    header_header:
+    header_logo:
+    header_mobile-menu:
+    navigation_nav-container:
+    navigation_nav-item:
+    container:
+    groups_group:
+    groups_group-item:
 header:
- search-enable: false
- display-user: false
- title: "Dashboard"
- logo-enabled: true
- navlinks:
-  - url: 'https://mail.galli.li'
-    text: 'Mail'
-    groups:
-      - mail
-  - url: 'https://account.galli.li/change_password/'
-    text: 'Change Password'
-  - url: 'https://auth.galli.li/logout/'
-    text: 'Logout'
+ logo:
+   logo_override: false
+   title: "Dashboard"
+ mobilemenu:
+ navigation:
+  items:
+    - url: 'https://mail.galli.li'
+      text: 'Mail'
+      groups:
+        - mail
+      design:
+        class:
+          - bg-opaci
+    - url: 'https://account.galli.li/change_password/'
+      text: 'Change Password'
+    - url: 'https://auth.galli.li/logout/'
+      text: 'Logout'
 groups:
   - name: Media
     groups:
       - media
     items:
-      - url: 'https://jelllyfin.galli.li'
+      - url: 'https://jellyfin.galli.li'
         text: 'Jellyfin'
         logo_file: jellyfin.svg
-        groups: 
-         - media
       - url: 'https://sonarr.galli.li/'
         text: 'Sonarr'
         logo_file: sonarr.svg
@@ -87,14 +136,17 @@ groups:
           - mail
       - url: 'https://mail.galli.li/admin'
         text: 'Mail Administration'
+        logo_file: 'mailu.png'
         groups:
           - mail
       - url: 'https://element.galli.li/'
         text: 'Matrix Element'
+        logo_file: 'element.svg'
         groups:
           - chat
       - url: 'https://dimension.galli.li/'
         text: 'Matrix Dimension'
+        logo_file: 'dimension.png'
         groups:
           - chat
   - name: Managment
@@ -107,12 +159,20 @@ groups:
       - url: 'https://portainer.galli.li/'
         text: 'Portainer'
         logo_file: portainer.png
+      - url: 'https://dozzle.galli.li/'
+        text: 'Dozzle'
+        logo_file: dozzle.svg
       - url: 'https://mail.galli.li/admin'
         text: 'Mail Administration'
+        logo_file: 'mailu.png'
       - url: 'https://matrix.galli.li/synapse-admin/#/login'
         text: 'Synapse Admin'
+        logo_file: 'matrix-favicon.png'
       - url: 'https://cockpit.galli.li'
         text: 'Cockpit'
         logo_file: cockpit.png
 
-    
+  - name: Sabnzb
+    groups:
+      - admins
+    plugin: SabnzbdTraffic

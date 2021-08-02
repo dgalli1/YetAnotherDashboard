@@ -20,7 +20,7 @@ $cache = new CacheManager();
 $plugin = new PluginManager();
 $loader = new \Twig\Loader\FilesystemLoader([
     __DIR__."/../templates",
-    __DIR__."/../config/overwrites",
+    __DIR__."/../config/custom-templates",
     ...$plugin->getTemplateFolders()
     ]
 );
@@ -57,3 +57,4 @@ HookManager::trigger('postprocess_html',[
     'rendered_html' => $rendered
 ],'rendered_html');
 echo $rendered;
+echo '<style id="overwritteStyles"></style>';
